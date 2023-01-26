@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "data-engineering-zoomcamp"
+version = "0.1.0"
+description = ""
+authors = ["Camilo Ramirez <camiloramirezf@hotmail.com>"]
+readme = "README.md"
+packages = [{include = "data_engineering_zoomcamp"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+jupyter = "^1.0.0"
+pandas = "^1.5.2"
+sqlalchemy = "^1.4.46"
+psycopg2-binary = "^2.9.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
