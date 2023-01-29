@@ -25,3 +25,14 @@ Use `sftp de-instance` to connect to the remote instance
 
 inside ftp connection, go to desired location and write `put {name of file}` to upload files
 
+## Save/update GCP key to instance in order to be able to use APIs
+
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS=~/.gc/plucky.json
+```
+
+Now authenticate: 
+
+```bash
+gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
+```
