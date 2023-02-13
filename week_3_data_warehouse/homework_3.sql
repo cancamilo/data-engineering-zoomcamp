@@ -1,3 +1,8 @@
+CREATE OR REPLACE EXTERNAL TABLE `fhv_test.external_fhv_tripdata`
+OPTIONS (
+  format = 'parquet',
+  uris = ['gs://fhv_vehicle_bucket/fhv/fhv_tripdata_2019-*.parquet.gz']
+);
 
 
 CREATE OR REPLACE TABLE fhv_test.fhv_tripdata_non_partitoned AS
