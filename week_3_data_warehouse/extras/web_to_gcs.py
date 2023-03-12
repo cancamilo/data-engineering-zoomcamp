@@ -14,10 +14,12 @@ Pre-reqs:
 
 # services = ['fhv','green','yellow']
 # init_url = 'https://nyc-tlc.s3.amazonaws.com/trip+data/'
-init_url = "https://github.com/DataTalksClub/nyc-tlc-data/releases/download/fhv/"
+# init_url = "https://github.com/DataTalksClub/nyc-tlc-data/releases/download/fhv/"
+init_url = "https://github.com/DataTalksClub/nyc-tlc-data/releases/download/"
 
 # switch out the bucketname
 BUCKET = os.environ.get("GCP_GCS_BUCKET", "fhv_vehicle_bucket")
+BUCKET = "taxi_data_cancamilo"
 
 
 def upload_to_gcs(bucket, object_name, local_file):
@@ -45,10 +47,11 @@ def web_to_gcs(year, service):
         file_name = service + "_tripdata_" + year + "-" + month + ".csv.gz"
 
         # download it using requests via a pandas df
-        request_url = init_url + file_name
+        request_url = init_url + service + "/" + file_name
         # r = requests.get(request_url)
         # pd.DataFrame(io.StringIO(r.text)).to_csv(file_name)
         # print(f"Local: {file_name}")
+        # "https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_2019-01.csv.gz"
 
         # read it back into a parquet file
         df = pd.read_csv(
@@ -59,11 +62,20 @@ def web_to_gcs(year, service):
                 "dropOff_datetime": str,
                 "PUlocationID": float,
                 "DOlocationID": float,
+                "payment_type": float,
+                "RatecodeID": float
             },
         )
 
-        df["PUlocationID"] = df["PUlocationID"].astype(float)
-        df["DOlocationID"] = df["PUlocationID"].astype(float) 
+        df["PULocationID"] = df["PULocationID"].astype(float) # change to lower case L for fhv data
+        df["DOLocationID"] = df["PULocationID"].astype(float)
+        df["passenger_count"] = df["passenger_count"].astype(float)
+        df["payment_type"] = df["payment_type"].astype(float)
+        df["RatecodeID"] = df["RatecodeID"].astype(float)
+        df["VendorID"] = df["VendorID"].astype(float)
+        df["trip_type"] = df["trip_type"].astype(float)
+        # print(df.columns)
+        # print(df.dtypes)
 
         # print(df.info())
         file_name = file_name.replace(".csv", ".parquet")
@@ -81,4 +93,8 @@ def web_to_gcs(year, service):
 # web_to_gcs('2020', 'yellow')
 
 if __name__ == "__main__":
-    web_to_gcs("2019", "fhv")
+    # web_to_gcs("2019", "fhv")
+    web_to_gcs('2019', 'green')
+    web_to_gcs('2020', 'green')
+    #web_to_gcs('2019', 'yellow')
+    #web_to_gcs('2020', 'yellow')
