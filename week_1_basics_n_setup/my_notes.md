@@ -19,13 +19,13 @@ Edit ~/.ssh/config to include host (gc instance)
 
 Connect to the remote server specifying the name of the instance given in config `ssh de-instance`
 
-## Transfer files to remote server
+# Transfer files to remote server
 
 Use `sftp de-instance` to connect to the remote instance
 
 inside ftp connection, go to desired location and write `put {name of file}` to upload files
 
-## Save/update GCP key to instance in order to be able to use APIs
+# Save/update GCP key to instance in order to be able to use APIs
 
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS=~/.gc/plucky.json
@@ -37,7 +37,8 @@ Now authenticate:
 gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
 ```
 
-## persisting postgres config
+# persisting postgres config
+
 
 Note: to make pgAdmin configuration persistent, create a folder `data_pgadmin`. Change its permission via
 
@@ -55,3 +56,7 @@ services:
       - ./data_pgadmin:/var/lib/pgadmin
     ...
 ```
+
+# GC initial setup
+
+check the steps here: https://github.com/ziritrion/dataeng-zoomcamp/blob/main/notes/1_intro.md
